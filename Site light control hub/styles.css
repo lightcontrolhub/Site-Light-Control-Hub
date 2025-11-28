@@ -683,6 +683,15 @@ a:focus {
     outline-offset: 2px;
 }
 
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px #ffeb3b;
+    }
+    to {
+        text-shadow: 0 0 30px #ffeb3b, 0 0 40px #ffeb3b;
+    }
+}
+
 @media print {
     .header,
     .hero-visual,
