@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Light Control Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>">
+</head>
+<body>
+
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="nav-brand">
+                <span class="logo">💡</span>
+                <h1>Light Control Hub</h1>
+            </div>
+            <div class="header-actions">
+                <span class="user-welcome">Olá, <strong id="userName">Usuário</strong>!</span>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="dashboard-main">
+
+        <section class="control-panel">
+            <h2>🎮 Controle de Iluminação</h2>
+            <div class="lights-grid">
+                <div class="light-control" data-light="1">
+                    <div class="light-icon" id="light1">💡</div>
+                    <h3>Sala de Estar</h3>
+                    <div class="light-status" id="status1">Desligada</div>
+                    <div class="control-buttons">
+                        <button class="btn-on" onclick="toggleLight(1, true)">LIGAR</button>
+                        <button class="btn-off" onclick="toggleLight(1, false)">DESLIGAR</button>
+                    </div>
+                    <div class="last-activity">Última atividade: <span id="lastActivity1">--</span></div>
+                </div>
+
+                <div class="light-control" data-light="2">
+                    <div class="light-icon" id="light2">💡</div>
+                    <h3>Quarto</h3>
+                    <div class="light-status" id="status2">Desligada</div>
+                    <div class="control-buttons">
+                        <button class="btn-on" onclick="toggleLight(2, true)">LIGAR</button>
+                        <button class="btn-off" onclick="toggleLight(2, false)">DESLIGAR</button>
+                    </div>
+                    <div class="last-activity">Última atividade: <span id="lastActivity2">--</span></div>
+                </div>
+
+                <div class="light-control" data-light="3">
+                    <div class="light-icon" id="light3">💡</div>
+                    <h3>Cozinha</h3>
+                    <div class="light-status" id="status3">Desligada</div>
+                    <div class="control-buttons">
+                        <button class="btn-on" onclick="toggleLight(3, true)">LIGAR</button>
+                        <button class="btn-off" onclick="toggleLight(3, false)">DESLIGAR</button>
+                    </div>
+                    <div class="last-activity">Última atividade: <span id="lastActivity3">--</span></div>
+                </div>
+
+                <div class="light-control" data-light="4">
+                    <div class="light-icon" id="light4">💡</div>
+                    <h3>Banheiro</h3>
+                    <div class="light-status" id="status4">Desligada</div>
+                    <div class="control-buttons">
+                        <button class="btn-on" onclick="toggleLight(4, true)">LIGAR</button>
+                        <button class="btn-off" onclick="toggleLight(4, false)">DESLIGAR</button>
+                    </div>
+                    <div class="last-activity">Última atividade: <span id="lastActivity4">--</span></div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="statistics">
+            <h2>📊 Estatísticas de Uso</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value" id="totalUsage">0h</div>
+                    <div class="stat-label">Uso Total Hoje</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" id="energyCost">R$ 0,00</div>
+                    <div class="stat-label">Custo Estimado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌱</div>
+                    <div class="stat-value" id="co2Saved">0kg</div>
+                    <div class="stat-label">CO₂ Economizado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="peakHour">--:--</div>
+                    <div class="stat-label">Horário de Pico</div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="activity-history">
+            <h2>📋 Histórico de Atividades</h2>
+            <div class="history-controls">
+                <select id="historyFilter">
+                    <option value="today">Hoje</option>
+                    <option value="week">Esta Semana</option>
+                    <option value="month">Este Mês</option>
+                </select>
+                <button class="btn-export" onclick="exportHistory()">📥 Exportar</button>
+            </div>
+            <div class="history-list" id="historyList">
+
+            </div>
+        </section>
+
+
+        <section class="quick-actions">
+            <h2>⚡ Ações Rápidas</h2>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="allLightsOn()">
+                    <span class="action-icon">🌟</span>
+                    <span class="action-text">Ligar Todas</span>
+                </button>
+                <button class="action-btn" onclick="allLightsOff()">
+                    <span class="action-icon">🌙</span>
+                    <span class="action-text">Desligar Todas</span>
+                </button>
+                <button class="action-btn" onclick="nightMode()">
+                    <span class="action-icon">🌛</span>
+                    <span class="action-text">Modo Noturno</span>
+                </button>
+                <button class="action-btn" onclick="scheduleTimer()">
+                    <span class="action-icon">⏰</span>
+                    <span class="action-text">Programar</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+
+    <div id="timerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTimerModal()">&times;</span>
+            <h2>⏰ Programar Luzes</h2>
+            <form id="timerForm">
+                <label>Selecionar Luz:</label>
+                <select id="timerLight" required>
+                    <option value="">Escolha uma luz</option>
+                    <option value="1">Sala de Estar</option>
+                    <option value="2">Quarto</option>
+                    <option value="3">Cozinha</option>
+                    <option value="4">Banheiro</option>
+                </select>
+                
+                <label>Ação:</label>
+                <select id="timerAction" required>
+                    <option value="on">Ligar</option>
+                    <option value="off">Desligar</option>
+                </select>
+                
+                <label>Horário:</label>
+                <input type="time" id="timerTime" required>
+                
+                <label>Repetir:</label>
+                <select id="timerRepeat">
+                    <option value="once">Uma vez</option>
+                    <option value="daily">Diariamente</option>
+                    <option value="weekly">Semanalmente</option>
+                </select>
+                
+                <button type="submit" class="btn-primary">Programar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="emergency-contact">
+        <button class="emergency-btn" onclick="showEmergencyContact()">
+            🆘 Ajuda
+        </button>
+    </div>
+
+
+    <div id="emergencyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEmergencyModal()">&times;</span>
+            <h2>🆘 Contato de Emergência</h2>
+            <div class="emergency-info">
+                <p><strong>📞 Suporte Técnico:</strong></p>
+                <p><a href="tel:+5511999999999">(11) 99999-9999</a></p>
+                
+                <p><strong>📧 Email:</strong></p>
+                <p><a href="mailto:lightcontrolhub@gmail.com">lightcontrolhub@gmail.com</a></p>
+                
+                <p><strong>🏥 Em caso de emergência médica:</strong></p>
+                <p><a href="tel:192">SAMU: 192</a></p>
+                <p><a href="tel:193">Bombeiros: 193</a></p>
+                
+                <button class="btn-primary" onclick="callFamily()">📞 Ligar para Família</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
